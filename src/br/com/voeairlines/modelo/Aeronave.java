@@ -7,10 +7,19 @@ public class Aeronave {
 	private String modelo;
 	private String codigo;
 	
-	public Aeronave(String fabricante, String modelo, String codigo) {
+	public Aeronave(String tipoAeronave, String fabricante, String modelo, String codigo) {
+		this.tipoAeronave = tipoAeronave;
 		this.fabricante = fabricante;
 		this.modelo = modelo;
 		this.codigo = codigo;
+	}
+
+	public String getTipoAeronave() {
+		return tipoAeronave;
+	}
+
+	public void setTipoAeronave(String tipoAeronave) {
+		this.tipoAeronave = tipoAeronave;
 	}
 
 	public String getFabricante() {

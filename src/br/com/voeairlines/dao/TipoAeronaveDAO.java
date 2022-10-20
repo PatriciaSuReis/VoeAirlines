@@ -7,8 +7,6 @@ import java.sql.SQLException;
 
 import br.com.voeairlines.modelo.TipoAeronave;
 
-
-
 public class TipoAeronaveDAO {
 	
 	private final Connection connection;

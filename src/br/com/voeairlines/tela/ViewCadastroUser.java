@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import javax.swing.SwingConstants;
@@ -91,12 +92,27 @@ public class ViewCadastroUser {
 		panel.add(passwordFieldSenha);
 		
 		JButton btnNewButton = new JButton("Salvar");
+		//ação do botão
 		btnNewButton.addActionListener(new ActionListener() {
+			//sobrepor
+			@Override 
 			public void actionPerformed(ActionEvent e) {
-				//passar negocio de conexão para o controller
-				controller.salvarUsuario();
-							
+				
+				//validação de dados digitados
+				if(textFieldNome.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Nome obrigatório!");
+					textFieldNome.requestFocus();
 				}
+				else if(passwordFieldSenha.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Senha obrigatória!");
+					passwordFieldSenha.requestFocus();
+				} 
+				else {
+				//passar negocio de conexão para o controller
+					controller.salvarUsuario();
+				}
+							
+			}
 		});
 		
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 14));

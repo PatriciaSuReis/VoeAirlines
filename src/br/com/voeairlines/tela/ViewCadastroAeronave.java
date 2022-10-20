@@ -8,18 +8,25 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+
+import br.com.voeairlines.controller.CadastroAeronaveController;
+import br.com.voeairlines.controller.CadastroTipoAeronaveController;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ViewCadastroAeronave {
 	
 	private JFrame frame;
-	private JTextField tipo;
-	private JTextField fabricante;
-	private JTextField textField;
-	private JTextField cod;
+	private JTextField textFieldTipo;
+	private JTextField textFieldFabricante;
+	private JTextField textFieldModelo;
+	private JTextField textFieldCodigo;
+	private final CadastroAeronaveController controller;
 
 	/**
 	 * Launch the application.
@@ -42,6 +49,7 @@ public class ViewCadastroAeronave {
 	 */
 	public ViewCadastroAeronave() {
 		initialize();
+		controller = new CadastroAeronaveController(this);
 	}
 
 	/**
@@ -64,59 +72,130 @@ public class ViewCadastroAeronave {
 		fundo.add(formulario);
 		formulario.setLayout(null);
 		
-		JLabel tipo_aeronave = new JLabel("Cadastro de Aeronave");
-		tipo_aeronave.setHorizontalAlignment(SwingConstants.CENTER);
-		tipo_aeronave.setFont(new Font("Tahoma", Font.BOLD, 15));
-		tipo_aeronave.setBounds(10, 11, 202, 35);
-		formulario.add(tipo_aeronave);
-		
-		tipo = new JTextField();
-		tipo.setBounds(32, 69, 156, 20);
-		formulario.add(tipo);
-		tipo.setColumns(10);
-		
-		/*
-		JLabel aeronave = new JLabel("Tipo de Aeronave");
-		aeronave.setBounds(32, 57, 156, 14);
-		formulario.add(aeronave);*/
-		
-		JLabel fabrica = new JLabel("Fabricante");
-		fabrica.setBounds(32, 100, 156, 14);
-		formulario.add(fabrica);
-		
-		fabricante = new JTextField();
-		fabricante.setBounds(32, 113, 156, 20);
-		formulario.add(fabricante);
-		fabricante.setColumns(10);
+		JLabel aeronavaTitle = new JLabel("Cadastro de Aeronave");
+		aeronavaTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		aeronavaTitle.setFont(new Font("Tahoma", Font.BOLD, 15));
+		aeronavaTitle.setBounds(10, 11, 202, 35);
+		formulario.add(aeronavaTitle);
 		
 		//campo
-		JLabel modelo = new JLabel("Modelo\r\n");
-		modelo.setBounds(32, 138, 46, 14);
-		formulario.add(modelo);
+		JLabel tipoLabel = new JLabel("Tipo da aeronave");
+		tipoLabel.setBounds(32, 57, 156, 14);
+		formulario.add(tipoLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(32, 150, 156, 20);
-		formulario.add(textField);
-		textField.setColumns(10);
+		textFieldTipo = new JTextField();
+		textFieldTipo.setBounds(32, 71, 156, 20);
+		formulario.add(textFieldTipo);
+		textFieldTipo.setColumns(10);
 		
 		//campo
-		JLabel codigo = new JLabel("Codigo");
-		codigo.setBounds(32, 173, 46, 14);
-		formulario.add(codigo);
+		JLabel fabricaLabel = new JLabel("Fabricante");
+		fabricaLabel.setBounds(32, 100, 156, 14);
+		formulario.add(fabricaLabel);
 		
-		cod = new JTextField();
-		cod.setBounds(32, 187, 156, 20);
-		formulario.add(cod);
-		cod.setColumns(10);
+		textFieldFabricante = new JTextField();
+		textFieldFabricante.setBounds(32, 113, 156, 20);
+		formulario.add(textFieldFabricante);
+		textFieldFabricante.setColumns(10);
+		
+		//campo
+		JLabel modeloLabel = new JLabel("Modelo\r\n");
+		modeloLabel.setBounds(32, 138, 46, 14);
+		formulario.add(modeloLabel);
+		
+		textFieldModelo = new JTextField();
+		textFieldModelo.setBounds(32, 150, 156, 20);
+		formulario.add(textFieldModelo);
+		textFieldModelo.setColumns(10);
+		
+		//campo
+		JLabel codigoLabel = new JLabel("Codigo");
+		codigoLabel.setBounds(32, 173, 46, 14);
+		formulario.add(codigoLabel);
+		
+		textFieldCodigo = new JTextField();
+		textFieldCodigo.setBounds(32, 187, 156, 20);
+		formulario.add(textFieldCodigo);
+		textFieldCodigo.setColumns(10);
 		
 		JButton salvar = new JButton("Salvar");
+		salvar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				//validação
+				if(textFieldTipo.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Tipo de aeronave obrigatório!");
+					textFieldTipo.requestFocus();
+				}
+				else if(textFieldFabricante.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Fabricante obrigatória!");
+					textFieldFabricante.requestFocus();
+				} 
+				else if(textFieldModelo.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Modelo obrigatório!");
+					textFieldModelo.requestFocus();
+				} 
+				else if(textFieldCodigo.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Código obrigatória!");
+					textFieldCodigo.requestFocus();
+				}
+				else {
+				//passar negocio de conexão para o controller
+					controller.salvarAeronave();
+				}
+				
+			}
+		});
 		salvar.setBounds(65, 237, 89, 23);
 		formulario.add(salvar);
 		
 		JButton limpar = new JButton("Limpar");
+		limpar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//limpar campos
+				textFieldTipo.setText("");
+				textFieldFabricante.setText("");
+				textFieldModelo.setText("");
+				textFieldCodigo.setText("");
+				
+			}
+		});
 		limpar.setBounds(65, 271, 89, 23);
 		formulario.add(limpar);
+	}
 	
+
+	public JTextField getTextFieldTipo() {
+		return textFieldTipo;
 	}
 
+	public void setTextFieldTipo(JTextField textFieldTipo) {
+		this.textFieldTipo = textFieldTipo;
+	}
+
+	public JTextField getTextFieldFabricante() {
+		return textFieldFabricante;
+	}
+
+	public void setTextFieldFabricante(JTextField textFieldFabricante) {
+		this.textFieldFabricante = textFieldFabricante;
+	}
+
+	public JTextField getTextFieldModelo() {
+		return textFieldModelo;
+	}
+
+	public void setTextFieldModelo(JTextField textFieldModelo) {
+		this.textFieldModelo = textFieldModelo;
+	}
+
+	public JTextField getTextFieldCodigo() {
+		return textFieldCodigo;
+	}
+
+	public void setTextFieldCodigo(JTextField textFieldCodigo) {
+		this.textFieldCodigo = textFieldCodigo;
+	}
+	
 }

@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
@@ -99,9 +101,22 @@ public class ViewCadastroTipoAeronava {
 		//botao para salvar
 		JButton salvar = new JButton("Salvar");
 		salvar.addActionListener(new ActionListener() {
+			//sobrepor
+			@Override 
 			public void actionPerformed(ActionEvent e) {
+				
+				if(textFieldTipo.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Tipo de aeronave obrigatório!");
+					textFieldTipo.requestFocus();
+				}
+				else if(textFieldDescricao.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Descrição obrigatória!");
+					textFieldDescricao.requestFocus();
+				} 
+				else {
 				//passar negocio de conexão para o controller
-				controller.salvarTipoAeronave();
+					controller.salvarTipoAeronave();
+				}
 				
 			}
 		});

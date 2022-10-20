@@ -33,7 +33,7 @@ public class CadastroTipoAeronaveController {
 				TipoAeronaveDAO tipoDAO = new TipoAeronaveDAO(conexao);
 				tipoDAO.insert(tipoBD);
 				
-				JOptionPane.showMessageDialog(null, "Tipo de aeronave salva");
+				JOptionPane.showMessageDialog(null, "Tipo de aeronave salva!");
 				
 			} catch (SQLException ex) {
 				Logger.getLogger(ViewCadastroUser.class.getName()).log(Level.SEVERE, null, ex);
